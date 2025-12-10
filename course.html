@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Agentic Systems Mastery Roadmap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --bg: #050816;
+        --bg-elevated: #0b1020;
+        --bg-elevated-soft: #111827;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --accent: #6366f1;
+        --accent-soft: rgba(99, 102, 241, 0.12);
+        --accent-strong: #4f46e5;
+        --text: #e5e7eb;
+        --text-muted: #9ca3af;
+        --text-soft: #6b7280;
+        --danger: #f97373;
+        --radius-lg: 16px;
+        --radius-md: 10px;
+        --radius-pill: 999px;
+        --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.7);
+        --shadow-subtle: 0 14px 30px rgba(15, 23, 42, 0.6);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          "Segoe UI", sans-serif;
+        background: radial-gradient(
+          circle at top left,
+          #111827 0,
+          #020617 55%,
+          #000 100%
+        );
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .app {
+        max-width: 1100px;
+        margin: 24px auto 40px;
+        padding: 0 16px 40px;
+      }
+
+      .app-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+      }
+
+      .app-header h1 {
+        font-size: 1.8rem;
+        margin: 0 0 6px;
+        letter-spacing: 0.02em;
+      }
+
+      .app-header p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .header-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: var(--radius-pill);
+        font-size: 0.75rem;
+        color: var(--accent);
+        background: var(--accent-soft);
+        border: 1px solid rgba(129, 140, 248, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .tag-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+      }
+
+      button {
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      #reset-progress {
+        padding: 7px 10px;
+        border-radius: var(--radius-pill);
+        font-size: 0.78rem;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-soft);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.16s ease-out;
+      }
+
+      #reset-progress:hover {
+        background: rgba(248, 113, 113, 0.08);
+        color: #fecaca;
+        border-color: rgba(252, 165, 165, 0.5);
+        transform: translateY(-0.5px);
+      }
+
+      #reset-progress span.icon {
+        font-size: 0.9em;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+
+      .stat-card {
+        background: radial-gradient(circle at top, #111827 0, #020617 60%);
+        border-radius: var(--radius-lg);
+        padding: 14px 16px 13px;
+        border: 1px solid var(--border-subtle);
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: radial-gradient(
+          circle at top left,
+          rgba(96, 165, 250, 0.12) 0,
+          transparent 55%
+        );
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .stat-card-inner {
+        position: relative;
+        z-index: 1;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-soft);
+        margin-bottom: 4px;
+      }
+
+      .stat-main-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+
+      .stat-value {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      .stat-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        text-align: right;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 7px;
+        border-radius: var(--radius-pill);
+        background: rgba(15, 23, 42, 0.85);
+        overflow: hidden;
+        border: 1px solid rgba(31, 41, 55, 0.85);
+        position: relative;
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        background-image: linear-gradient(90deg, #4f46e5, #22c55e);
+        box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.4);
+        transition: width 0.18s ease-out;
+      }
+
+      .progress-bar-fill.xp {
+        background-image: linear-gradient(90deg, #22c55e, #a855f7, #f97316);
+      }
+
+      .levels-container {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .level-card {
+        position: relative;
+        background: linear-gradient(
+          120deg,
+          rgba(15, 23, 42, 0.96),
+          rgba(17, 24, 39, 0.96)
+        );
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-subtle);
+        padding: 12px 14px;
+        box-shadow: var(--shadow-subtle);
+        overflow: hidden;
+      }
+
+      .level-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 24px;
+        width: 4px;
+        height: calc(100% - 34px);
+        border-radius: 0 999px 999px 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(129, 140, 248, 0.85),
+          rgba(45, 212, 191, 0.7)
+        );
+        opacity: 0.85;
+      }
+
+      .level-header {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        margin-left: 4px;
+      }
+
+      .level-main {
+        flex: 1;
+      }
+
+      .level-title-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 3px;
+      }
+
+      .level-pill {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-soft);
+        padding: 2px 8px;
+        border-radius: var(--radius-pill);
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+      }
+
+      .level-title {
+        font-size: 0.98rem;
+        font-weight: 500;
+      }
+
+      .level-desc {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      .level-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        min-width: 150px;
+      }
+
+      .level-status {
+        font-size: 0.78rem;
+        padding: 2px 8px;
+        border-radius: var(--radius-pill);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        background: rgba(15, 23, 42, 0.9);
+        color: var(--text-soft);
+      }
+
+      .level-status.complete {
+        border-color: rgba(45, 212, 191, 0.75);
+        color: #6ee7b7;
+        background: rgba(6, 78, 59, 0.32);
+      }
+
+      .level-status.in-progress {
+        border-color: rgba(59, 130, 246, 0.75);
+        color: #93c5fd;
+        background: rgba(30, 64, 175, 0.35);
+      }
+
+      .level-progress-meta {
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+      }
+
+      .level-progress-percent {
+        font-size: 0.86rem;
+        font-weight: 500;
+      }
+
+      .level-progress-remaining {
+        font-size: 0.75rem;
+        color: var(--text-soft);
+      }
+
+      .level-progress-bar {
+        margin-top: 6px;
+        margin-left: 4px;
+        max-width: 420px;
+      }
+
+      .topics {
+        position: relative;
+        z-index: 1;
+        margin-top: 10px;
+        margin-left: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .topic-row {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1.6fr) minmax(0, 1fr);
+        gap: 10px;
+        align-items: flex-start;
+        padding: 8px 9px;
+        border-radius: var(--radius-md);
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(31, 41, 55, 0.9);
+      }
+
+      .topic-check {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 2px;
+      }
+
+      .topic-checkbox {
+        width: 16px;
+        height: 16px;
+        border-radius: 5px;
+        border: 1px solid rgba(75, 85, 99, 0.9);
+        appearance: none;
+        background: radial-gradient(
+          circle at center,
+          #020617 0,
+          #020617 50%,
+          #020617 100%
+        );
+        cursor: pointer;
+        position: relative;
+        transition: all 0.12s ease-out;
+      }
+
+      .topic-checkbox:checked {
+        border-color: rgba(52, 211, 153, 0.9);
+        background: radial-gradient(
+          circle at center,
+          #22c55e 0,
+          #16a34a 35%,
+          #052e16 100%
+        );
+        box-shadow: 0 0 0 1px rgba(5, 46, 22, 0.6);
+      }
+
+      .topic-checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.65rem;
+        color: white;
+      }
+
+      .topic-main {
+        min-width: 0;
+      }
+
+      .topic-title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 3px;
+      }
+
+      .topic-summary {
+        font-size: 0.8rem;
+        color: var(--text-soft);
+      }
+
+      .topic-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-end;
+      }
+
+      .topic-buttons {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 4px 9px;
+        border-radius: var(--radius-pill);
+        font-size: 0.75rem;
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(55, 65, 81, 0.95);
+        color: var(--text-soft);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.12s ease-out;
+        white-space: nowrap;
+      }
+
+      .btn:hover {
+        border-color: rgba(129, 140, 248, 0.85);
+        color: #e5e7eb;
+        background: rgba(15, 23, 42, 1);
+      }
+
+      .btn.primary {
+        background: rgba(79, 70, 229, 0.15);
+        border-color: rgba(129, 140, 248, 0.85);
+        color: #e5e7eb;
+      }
+
+      .btn.primary:hover {
+        background: rgba(79, 70, 229, 0.35);
+      }
+
+      .btn .icon {
+        font-size: 0.9em;
+      }
+
+      .topic-meta-small {
+        font-size: 0.75rem;
+        color: var(--text-soft);
+      }
+
+      .prompt-text {
+        margin-top: 6px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px dashed rgba(55, 65, 81, 0.9);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.76rem;
+        white-space: pre-wrap;
+        max-height: 180px;
+        overflow: auto;
+        color: #d1d5db;
+      }
+
+      .prompt-text.hidden {
+        display: none;
+      }
+
+      .app-footer {
+        margin-top: 22px;
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        text-align: center;
+      }
+
+      @media (max-width: 840px) {
+        .app {
+          margin-top: 18px;
+        }
+        .app-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .header-actions {
+          align-items: flex-start;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .topic-row {
+          grid-template-columns: auto minmax(0, 1fr);
+        }
+        .topic-actions {
+          grid-column: 2 / 3;
+          align-items: flex-start;
+          margin-top: 4px;
+        }
+        .level-meta {
+          min-width: 0;
+          align-items: flex-start;
+        }
+        .level-progress-meta {
+          flex-wrap: wrap;
+        }
+        .level-card::before {
+          top: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div>
+          <h1>Agentic Systems Mastery Roadmap</h1>
+          <p>
+            Track your progress from noob → world-class agent systems architect.
+            Tick topics, gain XP, and copy prompts to study in fresh chats.
+          </p>
+        </div>
+        <div class="header-actions">
+          <div class="tag">
+            <span class="tag-dot"></span>
+            <span>Solo Learning Run</span>
+          </div>
+          <button id="reset-progress">
+            <span class="icon">🧹</span>
+            <span>Reset progress</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="stats">
+        <div class="stat-card">
+          <div class="stat-card-inner">
+            <div class="stat-label">XP & Rank</div>
+            <div class="stat-main-row">
+              <div class="stat-value" id="xp-value">0 XP</div>
+              <div class="stat-sub" id="xp-rank">Rank: Observer</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar-fill xp" id="xp-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-inner">
+            <div class="stat-label">Journey Progress</div>
+            <div class="stat-main-row">
+              <div class="stat-value" id="journey-percent">0%</div>
+              <div class="stat-sub" id="journey-count">
+                0 / 0 topics complete
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar-fill" id="journey-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main id="levels-container" class="levels-container">
+        <!-- Levels rendered here -->
+      </main>
+
+      <footer class="app-footer">
+        Progress is stored locally in your browser using
+        <code>localStorage</code>. To customize the curriculum, edit the
+        <code>ROADMAP</code> data in the script.
+      </footer>
+    </div>
+
+    <script>
+      const XP_PER_TOPIC = 10;
+
+      const RANKS = [
+        { threshold: 0, label: "Observer" },
+        { threshold: 60, label: "Apprentice Agent Engineer" },
+        { threshold: 120, label: "Practitioner" },
+        { threshold: 180, label: "Senior Agent Architect" },
+        { threshold: 240, label: "Principal Agent Systems Engineer" },
+        { threshold: 300, label: "World-Class Agentic Systems Architect" },
+        { threshold: 420, label: "Master Architect" },
+      ];
+
+      // Roadmap data: 7 levels × topics, each with summary + prompt
+      const ROADMAP = [
+        {
+          id: "lvl1",
+          title: "Level 1 – Noob: Agentic & LLM Foundations (~1h)",
+          label: "Lvl 1 • Foundations",
+          description: "Core mental models for agents, LLMs, and planning.",
+          topics: [
+            {
+              id: "lvl1-topic1",
+              title:
+                'What is an "agentic system"? (Classical agents → LLM agents)',
+              summary:
+                "The idea of an agent as something that perceives, decides, and acts, plus how modern LLM agents extend this with tools and APIs (profiling, memory, planning, action).",
+              prompt: `You are an expert AI systems architect.
+
+Teach me what an "agentic system" is, starting from classical AI agents (Russell & Norvig style) to modern LLM-based agents with tools.
+
+Please:
+- Contrast reactive, deliberative, and hybrid agents.
+- Explain how modern LLM agents add profiling, memory, planning, and action modules.
+- Use 2–3 concrete examples (e.g., web-browsing agent, code-execution agent).
+- End with 3 short quiz questions to check my understanding.`,
+            },
+            {
+              id: "lvl1-topic2",
+              title: "Foundation models & LLM basics for agent builders",
+              summary:
+                'How large foundation models are trained, capabilities vs limits, and why "LLM + tools + system design" beats "just fine-tune everything."',
+              prompt: `Act as a senior AI engineer.
+
+In 5–10 minutes, give me a concise but rigorous primer on foundation models (LLMs) specifically from the perspective of building agents.
+
+Focus on:
+- How these models are trained and what they're good/bad at.
+- Why we wrap them in tools and systems instead of just fine-tuning for every task.
+- Common failure modes that matter for agents (hallucinations, brittleness, context limits).
+
+Assume I'm a strong software engineer. Finish with 3 "red-flag" anti-patterns to avoid.`,
+            },
+            {
+              id: "lvl1-topic3",
+              title:
+                "OpenAI platform overview for agents (models, Responses API, Agents SDK, tools)",
+              summary:
+                "Big-picture map of the OpenAI ecosystem: GPT-5.1, Responses API, built-in tools (file_search, code interpreter, web search, computer use, realtime), and Agents SDK.",
+              prompt: `You are an OpenAI platform specialist.
+
+Give me a high-level map of the OpenAI platform specifically for building agents:
+- Key models (e.g., GPT-5.1, coding models, realtime voice models).
+- The Responses API: why it replaced raw Chat Completions for agents.
+- Built-in tools (file_search, code interpreter, web_search, computer_use, realtime).
+- The Agents SDK and when to use it vs hand-rolled loops.
+
+Keep it practical and opinionated. End with a one-paragraph "if I were you, I'd start with…".`,
+            },
+            {
+              id: "lvl1-topic4",
+              title: "Prompting fundamentals for agentic workflows",
+              summary:
+                'How to write system prompts and task prompts that are stable, tool-aware, and evaluation-friendly (vs "creative chatty prompts").',
+              prompt: `You are a prompting expert for GPT-5.1-style models.
+
+Teach me how to write solid prompts for agentic use-cases:
+- How to structure system vs user instructions.
+- How to express tool-usage rules and safety constraints.
+- How to ask for structured outputs (JSON schemas) that are robust in production.
+
+Show 2–3 concrete prompt templates I can reuse. End with a micro-exercise where I draft a system prompt and you critique it.`,
+            },
+            {
+              id: "lvl1-topic5",
+              title:
+                'Agent "brain" modules: profiling, memory, planning, action',
+              summary:
+                "The four core modules (role/profile, memory, planning, action) and how they work together as the mental architecture of an LLM agent.",
+              prompt: `Act as the author of an "Agent Architecture 101" guide.
+
+Explain the four core agent modules:
+- Profiling (role, goals, constraints)
+- Memory (short-term, long-term, external stores)
+- Planning (breaking down tasks, choosing tools)
+- Action (tool calls, API calls, environment changes)
+
+For each, give:
+- Responsibilities
+- Typical implementation choices
+- 1–2 common failure modes in real systems.
+
+Finish with a simple text diagram of the dataflow between these modules.`,
+            },
+            {
+              id: "lvl1-topic6",
+              title:
+                "Search & planning intuition (so you don't reinvent bad wheels)",
+              summary:
+                "Search, planning, belief states, and why classic AI planning ideas still matter for LLM agents (tree search, heuristics, anytime algorithms).",
+              prompt: `You are a classical AI professor talking to an agent engineer.
+
+In 5–10 minutes, recap the key planning/search ideas I need for agentic systems:
+- State, action, transition model, goal.
+- Tree search vs graph search, heuristics, anytime algorithms.
+- How these ideas map onto LLM-based planners and tool-using loops.
+
+Focus on intuition and examples instead of math. End by suggesting 2 places these ideas directly improve LLM agents.`,
+            },
+          ],
+        },
+        {
+          id: "lvl2",
+          title: "Level 2 – Amateur: Single-Agent Architecture & Tools (~1h)",
+          label: "Lvl 2 • Tools & Loops",
+          description: "Single-agent loops, tools, and safety basics.",
+          topics: [
+            {
+              id: "lvl2-topic1",
+              title:
+                "Tool/function calling & JSON schemas in the Responses API",
+              summary:
+                "How to define tools, JSON schemas, and let the model choose when/how to call them; how tool events flow through Responses.",
+              prompt: `You are an OpenAI tools/API tutor.
+
+Teach me, step by step, how tool/function calling works in the Responses API:
+- How to define a tool with a JSON schema.
+- How the model decides to call it and how tool events appear in responses.
+- How to design good parameter schemas and descriptions.
+
+Include a minimal but realistic Python example, then 3 "gotchas" that break real agents.`,
+            },
+            {
+              id: "lvl2-topic2",
+              title:
+                "ReAct-style prompting: interleaving reasoning and actions",
+              summary:
+                "The ReAct pattern (Thought → Action → Observation) and how to apply it when using tools; why it's become the default for tool-using agents.",
+              prompt: `Act as a researcher familiar with ReAct and Reflexion.
+
+Explain ReAct-style prompting for LLM agents:
+- The Thought → Action → Observation loop.
+- How this maps onto tool calls in the Responses API.
+- Example prompts for a web-search agent and a code-execution agent.
+
+End with a small exercise: have me design a ReAct prompt for a "log analysis agent" and critique it.`,
+            },
+            {
+              id: "lvl2-topic3",
+              title:
+                "Implementing the basic agent loop (perceive → decide → act → observe)",
+              summary:
+                "Turning prompts + tools into an explicit loop in code; handling observations, updating state, and deciding next steps.",
+              prompt: `You are a senior backend engineer.
+
+Walk me through implementing the core agent loop in code:
+- Input: user goal + current state.
+- Model call (with tools).
+- Inspect tool calls, execute them, feed observations back.
+- Iterate until done or timeout.
+
+Use Python with the OpenAI SDK. Show a minimal loop, then how to add:
+- Step limits
+- Simple state tracking
+- Logging for observability
+
+Assume I'm comfortable with async/await.`,
+            },
+            {
+              id: "lvl2-topic4",
+              title:
+                "Building a simple data-analysis agent with Code Interpreter",
+              summary:
+                "Turning Code Interpreter into a robust pattern: upload file, explore, run analyses, get plots, iteratively refine.",
+              prompt: `You are an expert on "Code Interpreter" style agents.
+
+Teach me how to design a data-analysis agent that:
+- Accepts a dataset from the user.
+- Uses the code interpreter tool to explore, clean, and analyze the data.
+- Returns plots and summaries safely.
+
+Explain the architecture and give a sample prompt + tool configuration.
+Finish with 2–3 pitfalls (e.g., runaway loops, big files, privacy).`,
+            },
+            {
+              id: "lvl2-topic5",
+              title: "Guardrails & safety: constraining tools and behavior",
+              summary:
+                "Defining what the agent may NOT do, scoping tools, setting tripwires, and using safety checks as first-class design elements.",
+              prompt: `Act as an AI safety engineer.
+
+Explain how to design guardrails for an agent that has powerful tools (e.g., code execution, database writes, computer_use).
+
+Cover:
+- Input validation and output filtering.
+- Tool scoping and "safe defaults".
+- Tripwires: conditions under which the agent must stop and escalate to a human.
+- Logging for forensic analysis.
+
+End with a checklist I can apply to any new agent I design.`,
+            },
+            {
+              id: "lvl2-topic6",
+              title: "Your first end-to-end agent using the OpenAI Python SDK",
+              summary:
+                'Concrete implementation of a small but real agent: e.g., "Markdown report writer" that uses web_search and file_search.',
+              prompt: `You are my coding mentor.
+
+Help me implement a tiny but real agent in Python using the OpenAI SDK and Responses API.
+
+Requirements:
+- Takes a user query.
+- Uses web_search + file_search tools when needed.
+- Produces a structured JSON output with fields: {answer, sources[], uncertainties[]}.
+- Has simple retries and logging.
+
+Walk me through the code step by step, with explanations and comments.`,
+            },
+          ],
+        },
+        {
+          id: "lvl3",
+          title: "Level 3 – Practitioner: Memory, RAG & Knowledge Agents (~1h)",
+          label: "Lvl 3 • Memory & RAG",
+          description: "Retrieval, memory, and knowledge-grounded agents.",
+          topics: [
+            {
+              id: "lvl3-topic1",
+              title: 'RAG vs "pure agents": when to retrieve vs think',
+              summary:
+                "Retrieval-Augmented Generation basics, how RAG and agents relate, and when you want classic RAG pipelines vs richer agent loops.",
+              prompt: `You are an AI engineering instructor.
+
+Compare and contrast:
+- "Plain" RAG pipelines (index + retrieve + answer).
+- Tool-using agents that can call retrieval as just one tool.
+
+Explain:
+- When RAG alone is enough.
+- When you need an agent with planning, tools, and memory.
+- Architectural patterns that combine both.
+
+Use practical examples (internal QA bot, log analysis agent, research assistant).`,
+            },
+            {
+              id: "lvl3-topic2",
+              title: "Designing episodic vs long-term memory for agents",
+              summary:
+                "Short-term conversational history vs persistent semantic memory (vector DBs, summaries) and policies for what to store/retrieve.",
+              prompt: `You are an architect of memory systems for LLM agents.
+
+Teach me how to design:
+- Episodic memory (conversation window, rolling summaries).
+- Long-term memory (vector DB, key-value stores).
+
+Discuss:
+- What to store, when to store it, and how to retrieve it.
+- Tradeoffs between raw transcripts, embeddings, and distilled summaries.
+- Failure modes like "overfitting to old memory" and privacy leaks.
+
+End with a concrete memory design for a personal research assistant agent.`,
+            },
+            {
+              id: "lvl3-topic3",
+              title:
+                "Vector databases & retrieval strategies that actually work",
+              summary:
+                "Choosing a vector store, chunking, embeddings, hybrid search, and how to wire this into an agent.",
+              prompt: `Act as a pragmatic RAG engineer.
+
+In 5–10 minutes, teach me:
+- How to chunk documents for retrieval.
+- How to choose embedding dimensions / models.
+- When to use pure vector search vs hybrid (keyword + vector).
+- How an agent should decide WHEN to call retrieval and how many chunks to pull.
+
+Assume I'll be using a hosted vector DB. Finish with a small "decision tree" for retrieval design.`,
+            },
+            {
+              id: "lvl3-topic4",
+              title: "Context management & summarization loops",
+              summary:
+                "Keeping context windows under control using rolling summaries, hierarchical notes, and compression agents.",
+              prompt: `You are an expert in long-context agent design.
+
+Explain patterns for managing context:
+- Rolling conversation summaries.
+- Hierarchical notes (session → episode → atomic facts).
+- Using a summarization agent as a sub-agent.
+
+Show how to implement a "context manager" component that decides what to drop, keep, or compress after each step.`,
+            },
+            {
+              id: "lvl3-topic5",
+              title:
+                "Case study: designing a knowledge-grounded support copilot",
+              summary:
+                "End-to-end architecture for a Decagon-style customer support engine with specialized sub-agents, RAG, and human-in-the-loop.",
+              prompt: `Act as the principal engineer behind a production support copilot.
+
+Describe the architecture of a knowledge-grounded support agent:
+- Ingestion/indexing of docs and tickets.
+- An orchestrator that routes between FAQ lookup, action tools, and human escalation.
+- Use of RAG + memory + customer profile context.
+- Safety and override mechanisms.
+
+Draw a high-level architecture diagram in text and list key engineering tradeoffs.`,
+            },
+            {
+              id: "lvl3-topic6",
+              title:
+                "Evaluating factuality & hallucinations in knowledge agents",
+              summary:
+                "Defining evals and metrics for correctness, grounding, and citation quality; using batch evals and agent-based judges.",
+              prompt: `You are an LLM evaluation specialist.
+
+Teach me how to evaluate a knowledge-grounded agent:
+- What metrics to use (correctness, grounding, citation coverage, refusal quality).
+- How to build offline eval sets and batch runs.
+- Using another model as a judge vs human labels.
+- Common failure patterns and how to catch them automatically.
+
+End with a concrete example of an eval spec for a support copilot.`,
+            },
+          ],
+        },
+        {
+          id: "lvl4",
+          title: "Level 4 – Systems Engineer: Production & Microservices (~1h)",
+          label: "Lvl 4 • Production Systems",
+          description:
+            "Distributed systems, observability, evals, and security.",
+          topics: [
+            {
+              id: "lvl4-topic1",
+              title: "Agents inside distributed systems & microservices",
+              summary:
+                "Treating agents as services in a microservice architecture: boundaries, APIs, queues, and backpressure.",
+              prompt: `You are a distributed-systems architect.
+
+Explain how to embed LLM agents into a microservice architecture:
+- Where the agent lives (separate service vs library).
+- How it communicates (HTTP, queues, streaming).
+- Patterns for scaling (stateless workers, shared stores, job queues).
+- How to isolate blast radius when the agent misbehaves.
+
+Use a concrete example: an "AI order support" service in an e-commerce backend.`,
+            },
+            {
+              id: "lvl4-topic2",
+              title: "Observability for agents: logs, traces, metrics",
+              summary:
+                "What to log (prompts, tool calls, decisions), how to trace flows, and metrics to monitor for safety, cost, and quality.",
+              prompt: `Act as an SRE for AI systems.
+
+Teach me how to instrument an agent service:
+- What to log (inputs, outputs, tool invocations, errors, decisions).
+- How to trace a multi-step agent run end-to-end.
+- Metrics to track: latency, tool-call rate, cost per request, safety violations, eval scores.
+- How to sample data for deeper analysis without breaking privacy.
+
+Finish with a short "logging schema" example in JSON.`,
+            },
+            {
+              id: "lvl4-topic3",
+              title:
+                "Evaluation harnesses & batch/offline testing (Batches API + Evals)",
+              summary:
+                "Running large test suites via batch APIs, using eval frameworks for regression testing across model or prompt changes.",
+              prompt: `You are an AI eval and tooling engineer.
+
+Explain how to:
+- Build an eval harness for an agent (inputs, expected behaviors, scoring).
+- Run large evals using batch or offline pipelines.
+- Compare different prompts/models/agent configs using A/B experiments.
+
+Show a minimal but realistic setup and how it plugs into CI/CD.`,
+            },
+            {
+              id: "lvl4-topic4",
+              title:
+                "Cost, latency, and reliability trade-offs in agent design",
+              summary:
+                "How to reason about model choice, depth of agent loops, caching, and fallback paths to hit SLOs.",
+              prompt: `Act as a staff engineer responsible for SLOs.
+
+Teach me how to reason about:
+- Latency budgets for multi-step agents.
+- Cost-per-request, and where caching helps.
+- When to use smaller/faster models vs big reasoning models.
+- Fallback and degradation strategies when tools/models fail.
+
+End with a short checklist for "productionizing" a prototype agent.`,
+            },
+            {
+              id: "lvl4-topic5",
+              title: "UX & interaction design for agentic products",
+              summary:
+                "How to design interfaces that make agent behavior legible, recoverable, and trustworthy (affordances, feedback, error recovery).",
+              prompt: `You are a UX designer specialized in agentive products.
+
+Explain UX principles for agents:
+- Making capabilities and limits visible.
+- Showing intermediate steps (plans, tool calls) without overwhelming the user.
+- Designing good error states, confirmations, and "undo".
+- Balancing autonomy vs control.
+
+Use examples from copilots and smart assistants. Suggest 3 design anti-patterns to avoid.`,
+            },
+            {
+              id: "lvl4-topic6",
+              title: "Security, auth & data governance for agents",
+              summary:
+                "Handling secrets, per-user data isolation, access control to tools and backends, and compliance concerns.",
+              prompt: `You are a security architect.
+
+Teach me how to secure an agent system:
+- Managing API keys and secrets used by tools.
+- Per-user auth and scoping: the agent should only act on what the user can access.
+- Data retention, PII handling, and compliance basics.
+- Threat models specific to agents (prompt injection, tool misuse).
+
+Finish with a short threat-model outline for an internal "company copilot".`,
+            },
+          ],
+        },
+        {
+          id: "lvl5",
+          title:
+            "Level 5 – Senior Agent Architect: Multi-Agent & Orchestration (~1h)",
+          label: "Lvl 5 • Multi-Agent",
+          description:
+            "Planner–executor patterns, orchestration, and debugging.",
+          topics: [
+            {
+              id: "lvl5-topic1",
+              title: "Planner–executor & router–specialist patterns",
+              summary:
+                "Designing multi-agent systems where one agent plans or routes, and others execute specialized tasks.",
+              prompt: `You are a multi-agent systems architect.
+
+Explain the planner–executor and router–specialist patterns:
+- Responsibilities of the planner/router.
+- How specialist agents are defined (tools, instructions, memory).
+- How to pass state and results between agents.
+- Pros/cons vs one giant "do everything" agent.
+
+Include a concrete example (e.g., research planner + coding executor + summarizer).`,
+            },
+            {
+              id: "lvl5-topic2",
+              title: "Agents SDK for multi-agent workflows & handoffs",
+              summary:
+                "Using the Agents SDK to define multiple agents, handoffs, and guardrails instead of manual orchestration.",
+              prompt: `Act as an engineer who has shipped products with the OpenAI Agents SDK.
+
+Teach me how to:
+- Define multiple agents with different tools/instructions.
+- Implement handoffs between agents (who calls whom, and when).
+- Use built-in guardrails and tracing for complex workflows.
+
+Show a small YAML or code configuration for 2–3 cooperating agents.`,
+            },
+            {
+              id: "lvl5-topic3",
+              title: "Coordination and negotiation in multi-agent systems",
+              summary:
+                "High-level ideas from multi-agent systems (coordination, incentives, conflict resolution) and how they map onto LLM multi-agent architectures.",
+              prompt: `You are a professor of multi-agent systems advising an LLM engineer.
+
+In 5–10 minutes, teach me:
+- Basic notions of cooperation, competition, and coordination.
+- How to avoid deadlocks, loops, and conflicts in multi-agent designs.
+- Simple mechanisms for "voting" or adjudicating between agents.
+
+Focus on patterns I can implement today with LLM agents, not heavy formalism.`,
+            },
+            {
+              id: "lvl5-topic4",
+              title:
+                "Designing specialized sub-agents (FAQAgent, ActionAgent, Evaluator, etc.)",
+              summary:
+                "How to carve out narrow, robust sub-agents with focused instructions, tools, and evals (like Decagon's engine).",
+              prompt: `You are the architect of a modular agent engine.
+
+Teach me how to design specialized sub-agents:
+- FAQAgent (pure RAG).
+- ActionAgent (tool-heavy, mutates state).
+- Evaluator/Judge agent (quality and safety checks).
+- Human-assist agent (drafts responses for human approval).
+
+Explain the contract of each agent and how they plug into an orchestrator.`,
+            },
+            {
+              id: "lvl5-topic5",
+              title: "Concurrency, background work & long-running tasks",
+              summary:
+                "Handling long jobs with background Responses, queues, and callbacks; avoiding circular tool use and runaway loops.",
+              prompt: `Act as a backend + AI engineer.
+
+Explain patterns for handling long-running or concurrent work in agent systems:
+- Background Responses / job queues.
+- Progress updates and partial results to users.
+- Avoiding circular tool use or infinite loops.
+- Timeouts and cancellation strategies.
+
+Use concrete examples and show pseudo-code for a job queue integration.`,
+            },
+            {
+              id: "lvl5-topic6",
+              title: "Failure modes & debugging multi-agent systems",
+              summary:
+                "Common pathologies (ping-ponging agents, forgotten state, conflicting decisions) and structured debugging approaches.",
+              prompt: `You are a staff engineer debugging a flaky multi-agent system.
+
+List the most common failure modes:
+- Agents calling each other in circles.
+- Conflicting decisions or inconsistent state.
+- Silent failures in tools.
+- Hidden prompt or state drift.
+
+Teach me a systematic debugging approach: what to log, where to insert evaluators, and how to write minimal repros.`,
+            },
+          ],
+        },
+        {
+          id: "lvl6",
+          title: "Level 6 – Research Engineer: Learning & Optimization (~1h)",
+          label: "Lvl 6 • Learning & RL",
+          description:
+            "Capability acquisition, RL intuition, and self-improvement.",
+          topics: [
+            {
+              id: "lvl6-topic1",
+              title:
+                "Prompting vs tools vs fine-tuning: capability acquisition strategies",
+              summary:
+                "When to rely on prompting, when to build tools and structure, and when to fine-tune or train smaller models.",
+              prompt: `You are an AI architecture strategist.
+
+Compare three ways to improve agent capabilities:
+- Better prompts and structures (ReAct, reflection, multi-agents).
+- Better tools / system design.
+- Fine-tuning or training new models.
+
+Give decision criteria and examples for each. End with a decision tree I can follow when an agent is underperforming.`,
+            },
+            {
+              id: "lvl6-topic2",
+              title:
+                "Multi-armed bandits & contextual bandits for tool routing",
+              summary:
+                "Using bandits to select tools, routes, or retrieval strategies based on online feedback.",
+              prompt: `You are a reinforcement learning practitioner.
+
+Explain multi-armed bandits and contextual bandits for an agent engineer:
+- Core idea and intuition (explore vs exploit).
+- How to use bandits to choose tools, retrieval configs, or sub-agents.
+- What feedback signals we can realistically log in production.
+
+Use a simple mathematical explanation but focus on practical implementation.`,
+            },
+            {
+              id: "lvl6-topic3",
+              title:
+                "Reinforcement learning basics for agents (MDPs, policies, value)",
+              summary:
+                "Grounding in RL concepts so you can reason about long-horizon agent behavior and task success.",
+              prompt: `Act as a clear RL tutor.
+
+Give me a compact RL primer focused on agentic systems:
+- MDPs, states, actions, rewards, policies.
+- Value functions and Q-values.
+- On-policy vs off-policy, episodic vs continuing tasks.
+
+Then map these concepts onto LLM agents (episodes = tasks, reward = evals / user feedback).`,
+            },
+            {
+              id: "lvl6-topic4",
+              title:
+                'RL & meta-reasoning for controlling deliberation (how hard to "think")',
+              summary:
+                "Using metareasoning / RL ideas to decide how many tool calls, how deep to plan, when to stop; anytime algorithms.",
+              prompt: `You are a researcher in metareasoning.
+
+Explain how ideas like anytime algorithms and decision-theoretic metareasoning apply to LLM agents:
+- Deciding how many steps of planning to run.
+- When to stop calling tools.
+- How to trade off latency vs quality.
+
+Suggest practical heuristics and how they relate to "true" metareasoning / RL solutions.`,
+            },
+            {
+              id: "lvl6-topic5",
+              title:
+                "Self-reflection and self-improvement loops (Reflexion, judges, auto-evals)",
+              summary:
+                "Letting agents critique and retry their own outputs, and using judge agents + past failures to improve behavior.",
+              prompt: `You are an expert on Reflexion-style methods.
+
+Teach me patterns for self-improvement:
+- Asking the model to critique its own answer and retry.
+- Using a separate judge agent to score outputs.
+- Logging failures and using them to augment prompts or eval sets.
+
+Show concrete prompt templates for critique-and-retry and for a judge agent.`,
+            },
+            {
+              id: "lvl6-topic6",
+              title: "Data & feedback pipelines for continuous learning",
+              summary:
+                "Closing the loop from logs → labels/evals → updated prompts/tools/models; practical LLMOps for agents.",
+              prompt: `You are an LLMOps lead.
+
+Explain how to build a feedback loop for an agent system:
+- Collect interactions and annotate them (human labels, model judges).
+- Turn them into eval datasets and prompt improvements.
+- Decide when to try fine-tuning.
+
+Describe the pipeline end-to-end, including storage, privacy, and deployment of changes.`,
+            },
+          ],
+        },
+        {
+          id: "lvl7",
+          title: "Level 7 – World-Class: Cutting Edge & Portfolio (~1h+)",
+          label: "Lvl 7 • Frontier & Career",
+          description:
+            "Realtime, computer-use, Deep Research, and portfolio polish.",
+          topics: [
+            {
+              id: "lvl7-topic1",
+              title: "Voice & realtime agents (Realtime API + streaming)",
+              summary:
+                "Building low-latency conversational voice agents, handling streaming input/output, interruptions, and tool use in realtime.",
+              prompt: `You are a realtime voice agent expert.
+
+Teach me how to design a production-grade voice agent:
+- Using the Realtime API for low-latency audio I/O.
+- Handling barge-in, interruptions, and streaming updates.
+- Integrating tools (search, databases) in a voice-first setting.
+- Observability for voice interactions.
+
+Assume I know WebRTC basics. End with a high-level architecture diagram.`,
+            },
+            {
+              id: "lvl7-topic2",
+              title: "Computer-use agents (browser/desktop control)",
+              summary:
+                "Agents that can control UIs via the Computer Use API—navigating websites, filling forms, scraping, etc., safely and reproducibly.",
+              prompt: `Act as a designer of "computer_use" agents.
+
+Explain:
+- How computer-use / virtual desktop tools work conceptually.
+- What tasks they are good for vs bad for.
+- How to constrain them for safety (whitelist domains, time limits, confirmations).
+- Logging and replay approaches for reproducibility.
+
+Use 1–2 example tasks (e.g., auto-filing expense reports).`,
+            },
+            {
+              id: "lvl7-topic3",
+              title: "Deep Research-style multi-tool research agents",
+              summary:
+                "Multi-step agents that read, search, cluster, and synthesize information across many documents and tools (like OpenAI's Deep Research / Operator style).",
+              prompt: `You are the architect of a "deep research" agent.
+
+Describe an end-to-end design for a research agent that:
+- Plans research steps.
+- Uses web_search, file_search, and code tools.
+- Clusters and summarizes findings.
+- Produces structured reports with citations and uncertainty estimates.
+
+Include details on memory, evaluation, and how to prevent shallow copy-paste behavior.`,
+            },
+            {
+              id: "lvl7-topic4",
+              title:
+                "Industrial case study: replicating a Decagon/BMW-style engine",
+              summary:
+                "Reconstructing a real-world architecture (customer support engine, fleet log analysis) from the case studies and mapping them to OpenAI primitives.",
+              prompt: `Act as a consultant reverse-engineering a production agent system (like Decagon's support engine or BMW's telemetry agent).
+
+Walk me through:
+- The components and data flows.
+- Where LLMs sit vs traditional code.
+- How tools and sub-agents are organized.
+- The evaluation and monitoring setup.
+
+Then help me sketch how I'd build a similar system using OpenAI Responses + Agents SDK.`,
+            },
+            {
+              id: "lvl7-topic5",
+              title: "Designing your flagship portfolio agent project",
+              summary:
+                'Spec\'ing and scoping a large, impressive agent system you can build & polish as a showcase (e.g., "Engineering Copilot", "Full-stack log triage agent", etc.).',
+              prompt: `You are my career coach and architect.
+
+Help me design a flagship agent project that would impress top AI companies:
+- Brainstorm 3–5 high-impact ideas (e.g., devtools, ops, data, product).
+- For my favorite idea, flesh out:
+  - Problem statement and users
+  - High-level architecture
+  - MVP scope vs "dream" scope
+  - Evaluation and success metrics
+
+End with a prioritized implementation plan I can follow over 4–6 weeks.`,
+            },
+            {
+              id: "lvl7-topic6",
+              title:
+                "Staying at the frontier & interview prep for top AI companies",
+              summary:
+                "How to keep your mental model updated (papers, blogs, repos), and how to present your work and think live during agent-system interviews.",
+              prompt: `You are a hiring manager and senior AI engineer.
+
+Teach me how to:
+- Stay current on agentic systems (papers, blogs, repos, benchmarks).
+- Build a narrative around my agent projects for interviews.
+- Handle whiteboard/system-design style interviews about agents (what they'll ask, what good answers look like).
+
+End with a 5–10 question mock interview outline I can practice with.`,
+            },
+          ],
+        },
+      ];
+
+      // --- State & persistence ---
+
+      let completedTopicIds = new Set();
+
+      function loadProgress() {
+        try {
+          const raw = localStorage.getItem("agentRoadmapProgress");
+          if (!raw) return;
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            completedTopicIds = new Set(parsed);
+          }
+        } catch (e) {
+          console.warn("Failed to load progress:", e);
+        }
+      }
+
+      function saveProgress() {
+        try {
+          localStorage.setItem(
+            "agentRoadmapProgress",
+            JSON.stringify(Array.from(completedTopicIds))
+          );
+        } catch (e) {
+          console.warn("Failed to save progress:", e);
+        }
+      }
+
+      // --- Rendering ---
+
+      function createLevelCard(level) {
+        const card = document.createElement("section");
+        card.className = "level-card";
+        card.dataset.levelId = level.id;
+
+        const header = document.createElement("div");
+        header.className = "level-header";
+
+        const main = document.createElement("div");
+        main.className = "level-main";
+
+        const titleRow = document.createElement("div");
+        titleRow.className = "level-title-row";
+
+        const pill = document.createElement("span");
+        pill.className = "level-pill";
+        pill.textContent = level.label;
+
+        const title = document.createElement("div");
+        title.className = "level-title";
+        title.textContent = level.title;
+
+        titleRow.appendChild(pill);
+        titleRow.appendChild(title);
+
+        const desc = document.createElement("p");
+        desc.className = "level-desc";
+        desc.textContent = level.description;
+
+        main.appendChild(titleRow);
+        main.appendChild(desc);
+
+        const meta = document.createElement("div");
+        meta.className = "level-meta";
+
+        const status = document.createElement("span");
+        status.className = "level-status";
+        status.id = `level-status-${level.id}`;
+        status.textContent = "Not started";
+
+        const progressMeta = document.createElement("div");
+        progressMeta.className = "level-progress-meta";
+
+        const percent = document.createElement("span");
+        percent.className = "level-progress-percent";
+        percent.id = `level-progress-text-${level.id}`;
+        percent.textContent = "0% complete";
+
+        const remaining = document.createElement("span");
+        remaining.className = "level-progress-remaining";
+        remaining.id = `level-remaining-text-${level.id}`;
+        remaining.textContent = `${level.topics.length} topics left`;
+
+        progressMeta.appendChild(percent);
+        progressMeta.appendChild(remaining);
+
+        meta.appendChild(status);
+        meta.appendChild(progressMeta);
+
+        header.appendChild(main);
+        header.appendChild(meta);
+
+        const progressBarWrapper = document.createElement("div");
+        progressBarWrapper.className = "level-progress-bar progress-bar";
+
+        const progressFill = document.createElement("div");
+        progressFill.className = "progress-bar-fill";
+        progressFill.id = `level-progress-bar-fill-${level.id}`;
+        progressBarWrapper.appendChild(progressFill);
+
+        const topicsWrapper = document.createElement("div");
+        topicsWrapper.className = "topics";
+
+        level.topics.forEach((topic) => {
+          const topicRow = document.createElement("div");
+          topicRow.className = "topic-row";
+
+          const checkCol = document.createElement("div");
+          checkCol.className = "topic-check";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.className = "topic-checkbox";
+          checkbox.checked = completedTopicIds.has(topic.id);
+          checkbox.addEventListener("change", (e) =>
+            handleTopicCheckboxChange(topic.id, e.target.checked)
+          );
+
+          checkCol.appendChild(checkbox);
+
+          const topicMain = document.createElement("div");
+          topicMain.className = "topic-main";
+
+          const topicTitle = document.createElement("div");
+          topicTitle.className = "topic-title";
+          topicTitle.textContent = topic.title;
+
+          const topicSummary = document.createElement("div");
+          topicSummary.className = "topic-summary";
+          topicSummary.textContent = topic.summary;
+
+          topicMain.appendChild(topicTitle);
+          topicMain.appendChild(topicSummary);
+
+          const actions = document.createElement("div");
+          actions.className = "topic-actions";
+
+          const btnRow = document.createElement("div");
+          btnRow.className = "topic-buttons";
+
+          const toggleBtn = document.createElement("button");
+          toggleBtn.className = "btn";
+          toggleBtn.innerHTML =
+            '<span class="icon">📜</span><span>Show prompt</span>';
+          toggleBtn.addEventListener("click", () =>
+            togglePromptVisibility(topic.id, toggleBtn)
+          );
+
+          const copyBtn = document.createElement("button");
+          copyBtn.className = "btn primary";
+          copyBtn.innerHTML =
+            '<span class="icon">📋</span><span>Copy prompt</span>';
+          copyBtn.addEventListener("click", () => copyPrompt(topic.id));
+
+          btnRow.appendChild(toggleBtn);
+          btnRow.appendChild(copyBtn);
+
+          const metaSmall = document.createElement("div");
+          metaSmall.className = "topic-meta-small";
+          metaSmall.textContent = `XP: ${XP_PER_TOPIC} • Est. 5–10 min`;
+
+          actions.appendChild(btnRow);
+          actions.appendChild(metaSmall);
+
+          const promptBox = document.createElement("pre");
+          promptBox.className = "prompt-text hidden";
+          promptBox.id = `prompt-${topic.id}`;
+          promptBox.textContent = topic.prompt;
+
+          topicRow.appendChild(checkCol);
+          topicRow.appendChild(topicMain);
+          topicRow.appendChild(actions);
+          topicRow.appendChild(promptBox);
+
+          topicsWrapper.appendChild(topicRow);
+        });
+
+        card.appendChild(header);
+        card.appendChild(progressBarWrapper);
+        card.appendChild(topicsWrapper);
+
+        return card;
+      }
+
+      function renderRoadmap() {
+        const container = document.getElementById("levels-container");
+        container.innerHTML = "";
+        ROADMAP.forEach((level) => {
+          const card = createLevelCard(level);
+          container.appendChild(card);
+        });
+        updateAllProgress();
+      }
+
+      // --- Progress + gamification ---
+
+      function getTotalTopicCount() {
+        return ROADMAP.reduce((sum, level) => sum + level.topics.length, 0);
+      }
+
+      function getCompletedCount() {
+        return completedTopicIds.size;
+      }
+
+      function getXpStats() {
+        const totalTopics = getTotalTopicCount();
+        const completed = getCompletedCount();
+        const xp = completed * XP_PER_TOPIC;
+        const totalXp = totalTopics * XP_PER_TOPIC;
+        return { xp, totalXp };
+      }
+
+      function computeRank(xp) {
+        let current = RANKS[0];
+        for (const rank of RANKS) {
+          if (xp >= rank.threshold) {
+            current = rank;
+          } else {
+            break;
+          }
+        }
+        return current.label;
+      }
+
+      function updateGlobalStats() {
+        const journeyPercentEl = document.getElementById("journey-percent");
+        const journeyCountEl = document.getElementById("journey-count");
+        const journeyBarFill = document.getElementById("journey-bar-fill");
+        const xpValueEl = document.getElementById("xp-value");
+        const xpRankEl = document.getElementById("xp-rank");
+        const xpBarFill = document.getElementById("xp-bar-fill");
+
+        const totalTopics = getTotalTopicCount();
+        const completed = getCompletedCount();
+        const { xp, totalXp } = getXpStats();
+
+        const journeyPct =
+          totalTopics === 0 ? 0 : (completed / totalTopics) * 100;
+        const xpPct = totalXp === 0 ? 0 : (xp / totalXp) * 100;
+
+        journeyPercentEl.textContent = `${journeyPct.toFixed(0)}%`;
+        journeyCountEl.textContent = `${completed} / ${totalTopics} topics complete`;
+        journeyBarFill.style.width = `${journeyPct}%`;
+
+        xpValueEl.textContent = `${xp} XP`;
+        xpRankEl.textContent = `Rank: ${computeRank(xp)}`;
+        xpBarFill.style.width = `${xpPct}%`;
+      }
+
+      function updateLevelStats() {
+        ROADMAP.forEach((level) => {
+          const completedInLevel = level.topics.filter((t) =>
+            completedTopicIds.has(t.id)
+          ).length;
+          const totalInLevel = level.topics.length;
+          const pct =
+            totalInLevel === 0 ? 0 : (completedInLevel / totalInLevel) * 100;
+
+          const progressText = document.getElementById(
+            `level-progress-text-${level.id}`
+          );
+          const remainingText = document.getElementById(
+            `level-remaining-text-${level.id}`
+          );
+          const barFill = document.getElementById(
+            `level-progress-bar-fill-${level.id}`
+          );
+          const status = document.getElementById(`level-status-${level.id}`);
+
+          if (!progressText || !remainingText || !barFill || !status) return;
+
+          progressText.textContent = `${pct.toFixed(0)}% complete`;
+          const remainingCount = totalInLevel - completedInLevel;
+          remainingText.textContent =
+            remainingCount === 0
+              ? "Level complete"
+              : `${remainingCount} topic${
+                  remainingCount === 1 ? "" : "s"
+                } left`;
+
+          barFill.style.width = `${pct}%`;
+
+          status.classList.remove("complete", "in-progress");
+          if (completedInLevel === 0) {
+            status.textContent = "Not started";
+          } else if (completedInLevel < totalInLevel) {
+            status.textContent = "In progress";
+            status.classList.add("in-progress");
+          } else {
+            status.textContent = "Completed ✓";
+            status.classList.add("complete");
+          }
+        });
+      }
+
+      function updateAllProgress() {
+        updateGlobalStats();
+        updateLevelStats();
+      }
+
+      // --- Event handlers ---
+
+      function handleTopicCheckboxChange(topicId, checked) {
+        if (checked) {
+          completedTopicIds.add(topicId);
+        } else {
+          completedTopicIds.delete(topicId);
+        }
+        saveProgress();
+        updateAllProgress();
+      }
+
+      function togglePromptVisibility(topicId, buttonEl) {
+        const promptBox = document.getElementById(`prompt-${topicId}`);
+        if (!promptBox) return;
+        const isHidden = promptBox.classList.contains("hidden");
+        if (isHidden) {
+          promptBox.classList.remove("hidden");
+          buttonEl.innerHTML =
+            '<span class="icon">📜</span><span>Hide prompt</span>';
+        } else {
+          promptBox.classList.add("hidden");
+          buttonEl.innerHTML =
+            '<span class="icon">📜</span><span>Show prompt</span>';
+        }
+      }
+
+      async function copyPrompt(topicId) {
+        const topic = ROADMAP.flatMap((l) => l.topics).find(
+          (t) => t.id === topicId
+        );
+        if (!topic) return;
+        try {
+          await navigator.clipboard.writeText(topic.prompt);
+          showCopyToast("Prompt copied to clipboard");
+        } catch (e) {
+          console.warn("Clipboard error:", e);
+          alert(
+            "Couldn't access clipboard. You can manually select and copy the prompt."
+          );
+        }
+      }
+
+      function showCopyToast(message) {
+        let toast = document.getElementById("copy-toast");
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.id = "copy-toast";
+          toast.style.position = "fixed";
+          toast.style.bottom = "18px";
+          toast.style.left = "50%";
+          toast.style.transform = "translateX(-50%)";
+          toast.style.padding = "8px 14px";
+          toast.style.borderRadius = "999px";
+          toast.style.background =
+            "linear-gradient(90deg, rgba(34,197,94,0.9), rgba(59,130,246,0.9))";
+          toast.style.color = "#ecfdf5";
+          toast.style.fontSize = "0.8rem";
+          toast.style.boxShadow = "0 14px 30px rgba(15,23,42,0.8)";
+          toast.style.zIndex = "9999";
+          toast.style.opacity = "0";
+          toast.style.transition =
+            "opacity 0.15s ease-out, transform 0.15s ease-out";
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.style.opacity = "1";
+        toast.style.transform = "translateX(-50%) translateY(-3px)";
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transform = "translateX(-50%) translateY(0)";
+        }, 1500);
+      }
+
+      function resetProgress() {
+        if (
+          !confirm(
+            "Reset all progress for the Agentic Systems Roadmap?\nThis will clear your completed topics and XP."
+          )
+        ) {
+          return;
+        }
+        completedTopicIds = new Set();
+        saveProgress();
+        renderRoadmap();
+      }
+
+      // --- Init ---
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadProgress();
+        renderRoadmap();
+        const resetBtn = document.getElementById("reset-progress");
+        resetBtn.addEventListener("click", resetProgress);
+      });
+    </script>
+  </body>
+</html>
